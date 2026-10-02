@@ -1,52 +1,124 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Free Study Std.Hub</title><link rel="stylesheet" href="/css/style.css"></head>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Free Study Std.Hub</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
 <body>
-<header><div class="wrap nav"><a class="brand" href="/">Free Study <span>Std.Hub</span></a>
-<nav><a href="/">Home</a><a href="#subjects">Subjects</a><a href="#questions">Questions</a><a href="#about">About</a><a class="admin-link" href="/admin.html">Admin</a></nav></div></header>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/">
+      Free Study <span>Std.Hub</span>
+    </a>
+
+```
+<nav>
+  <a href="/">Home</a>
+  <a href="#subjects">Subjects</a>
+  <a href="#questions">Questions</a>
+  <a href="#about">About</a>
+  <a class="admin-link" href="/admin.html">Admin</a>
+</nav>
+```
+
+  </div>
+</header>
+
 <main>
+
 <section class="hero" id="home">
   <div class="wrap">
-    <p class="eyebrow">LEARN • PRACTICE • GROW</p>
 
-    <h1>Learn. Practice. Grow.</h1>
+```
+<p class="eyebrow">LEARN • PRACTICE • GROW</p>
 
-    <p>
-      Your free study companion for questions, revision
-      and learning materials.
-    </p>
+<h1>Learn. Practice. Grow.</h1>
 
-    <div class="search">
-      <input
-        id="search"
-        type="text"
-        placeholder="Search questions..."
-      >
+<p>
+  Your free study companion for questions, revision
+  and learning materials.
+</p>
 
-      <button onclick="loadQuestions()">
-        🔎 Search
-      </button>
-    </div>
+<!-- SEARCH -->
+<div class="search">
+  <input
+    id="search"
+    type="text"
+    placeholder="Search questions..."
+  >
+
+  <button onclick="loadQuestions()">
+    🔎 Search
+  </button>
+</div>
+
+<!-- AI ASSISTANT -->
+<div class="ai-box">
+
+  <h2>🤖 Ask Free Study AI</h2>
+
+  <p>
+    Ask a question about Mathematics, Computer Science,
+    Economics or another school subject.
+  </p>
+
+  <textarea
+    id="aiQuestion"
+    placeholder="Type your question here..."
+    rows="4"
+  ></textarea>
+
+  <button onclick="askAI()">
+    🤖 Ask AI
+  </button>
+
+  <div id="aiResult" class="ai-result"></div>
+
+</div>
+```
+
   </div>
 </section>
-<section id="subjects" class="wrap section">
-  <div class="section-title">
-    <div>
-      <p class="eyebrow">LEARNING</p>
-      <h2>Choose a subject</h2>
-    </div>
 
-    <span id="subjectCount"></span>
+<!-- SUBJECTS -->
+
+<section id="subjects" class="wrap section">
+
+  <div class="section-title">
+
+```
+<div>
+  <p class="eyebrow">LEARNING</p>
+  <h2>Choose a subject</h2>
+</div>
+
+<span id="subjectCount"></span>
+```
+
   </div>
 
   <div id="subjectsGrid" class="grid"></div>
+
 </section>
+
+<!-- QUESTIONS -->
+
 <section id="questions" class="wrap section">
+
   <div class="section-title">
-    <div>
-      <p class="eyebrow">PRACTICE</p>
-      <h2>Test your knowledge</h2>
-    </div>
+
+```
+<div>
+  <p class="eyebrow">PRACTICE</p>
+  <h2>Test your knowledge</h2>
+</div>
+```
+
   </div>
 
   <p class="muted">
@@ -54,48 +126,85 @@
   </p>
 
   <div id="questionsList"></div>
+
 </section>
-<section class="wrap ad"><b>ADVERTISEMENT</b><p>Your future advertisement space can be connected here.</p></section>
+
+<!-- ADVERTISEMENT -->
+
+<section class="wrap ad">
+
+<b>ADVERTISEMENT</b>
+
+  <p>
+    Your future advertisement space can be connected here.
+  </p>
+
+</section>
+
+<!-- ABOUT -->
+
 <section id="about" class="wrap section">
+
   <div class="card">
-    <p class="eyebrow">ABOUT US</p>
 
-    <h2>Free Study Std.Hub</h2>
+```
+<p class="eyebrow">ABOUT US</p>
 
-    <p>
-      Free Study Std.Hub is a learning platform designed to help
-      students find study materials, practice questions and improve
-      their knowledge in one simple place.
+<h2>Free Study Std.Hub</h2>
+
+<p>
+  Free Study Std.Hub is a learning platform designed to help
+  students find study materials, practice questions and improve
+  their knowledge in one simple place.
+</p>
+
+<div class="grid">
+
+  <div>
+    <h3>📚 Learn</h3>
+
+    <p class="muted">
+      Explore different subjects and learning materials.
     </p>
-
-    <div class="grid">
-      <div>
-        <h3>📚 Learn</h3>
-        <p class="muted">
-          Explore different subjects and learning materials.
-        </p>
-      </div>
-
-      <div>
-        <h3>📝 Practice</h3>
-        <p class="muted">
-          Practice questions and check your answers instantly.
-        </p>
-      </div>
-
-      <div>
-        <h3>🚀 Grow</h3>
-        <p class="muted">
-          Keep practicing and build your knowledge step by step.
-        </p>
-      </div>
-    </div>
   </div>
+
+  <div>
+    <h3>📝 Practice</h3>
+
+    <p class="muted">
+      Practice questions and check your answers instantly.
+    </p>
+  </div>
+
+  <div>
+    <h3>🚀 Grow</h3>
+
+    <p class="muted">
+      Keep practicing and build your knowledge step by step.
+    </p>
+  </div>
+
+</div>
+```
+
+  </div>
+
 </section>
-</main><footer><div class="wrap">© <span id="year"></span> Free Study Std.Hub</div></footer>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    © <span id="year"></span> Free Study Std.Hub
+  </div>
+</footer>
+
 <script src="/js/app.js"></script>
 
+<!-- MOBILE NAVIGATION -->
+
 <div class="mobile-nav">
+
   <a href="#home">
     <span>⌂</span>
     Home
@@ -115,6 +224,7 @@
     <span>ℹ️</span>
     About
   </a>
+
 </div>
 
 </body>

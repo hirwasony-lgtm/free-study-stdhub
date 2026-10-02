@@ -232,3 +232,52 @@ if (yearElement) {
 
 loadSubjects();
 loadQuestions();
+async function askAI() {
+  const input = document.getElementById("aiQuestion");
+  const result = document.getElementById("aiResult");
+
+  const question = input.value.trim();
+
+  if (!question) {
+    result.innerHTML =
+      "<p class='wrong'>Please enter a question.</p>";
+    return;
+  }
+
+  result.innerHTML =
+    "<p>🤔 Thinking...</p>";
+
+  try {
+    const response = await getJSON("/api/ask-ai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        question
+      })
+    });
+
+    if (response.error) {
+      result.innerHTML =
+        `<p class="wrong">${esc(response.error)}</p>`;
+      return;
+    }
+
+    result.innerHTML = `
+      <div class="ai-answer">
+        <h3>💡 Answer</h3>
+        <p>${esc(response.answer).replace(/\n/g, "<br>")}</p>
+      </div>
+    `;
+
+  } catch (error) {
+    console.error(error);
+
+    result.innerHTML = `
+      <p class="wrong">
+        ❌ Unable to connect to AI. Please try again.
+      </p>
+    `;
+  }
+}
