@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcryptjs");
 const path = require("path");
+
 const fs = require("fs");
 
 const app = express();
@@ -15,20 +16,56 @@ function loadData() {
     const initial = {
       nextSubjectId: 4,
       nextQuestionId: 1,
-      admins: [{ id: 1, username: process.env.ADMIN_USERNAME || "admin", password_hash: bcrypt.hashSync(process.env.ADMIN_PASSWORD || "bu++er3ry", 10) }],
+      admins: [],
       subjects: [
-        { id: 1, name: "Mathematics", description: "Mathematics questions, exercises and answers." },
-        { id: 2, name: "Computer Science", description: "Computer networks, programming, databases and ICT." },
-        { id: 3, name: "Economics", description: "Economics notes, questions and revision materials." }
+        {
+          id: 1,
+          name: "Mathematics",
+          description: "Mathematics questions, exercises and answers."
+        },
+        {
+          id: 2,
+          name: "Computer Science",
+          description: "Computer networks, programming, databases and ICT."
+        },
+        {
+          id: 3,
+          name: "Economics",
+          description: "Economics notes, questions and revision materials."
+        }
       ],
       questions: []
     };
-    fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2));
+
+    fs.writeFileSync(
+      DATA_FILE,
+      JSON.stringify(initial, null, 2)
+    );
+
     return initial;
   }
-  return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+
+  return JSON.parse(
+    fs.readFileSync(DATA_FILE, "utf8")
+  );
 }
+
 let db = loadData();
+
+const adminUsername = process.env.ADMIN_USERNAME || "admin";
+const adminPassword = process.env.ADMIN_PASSWORD || "bu++er3ry";
+
+if (!db.admins || db.admins.length === 0) {
+  db.admins = [
+    {
+      id: 1,
+      username: adminUsername,
+      password_hash: bcrypt.hashSync(adminPassword, 10)
+    }
+  ];
+
+  save();
+}
 function save() { fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2)); }
 
 app.use(express.json({ limit: "1mb" }));
@@ -60,7 +97,34 @@ app.get("/api/questions", (req, res) => {
     .sort((a,b) => b.id - a.id);
   res.json(rows);
 });
+app.post("/api/questions/:id/check", (req, res) => {
+  const questionId = Number(req.params.id);
+  const userAnswer = String(req.body.answer || "").trim();
 
+  const item = db.questions.find(q => q.id === questionId);
+
+  if (!item) {
+    return res.status(404).json({ error: "Question not found" });
+  }
+
+  if (!userAnswer) {
+    return res.status(400).json({ error: "Please provide an answer" });
+  }
+
+  const normalize = (value) =>
+    String(value)
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+
+  const correct = normalize(userAnswer) === normalize(item.answer);
+
+  res.json({
+    correct,
+    message: correct ? "Correct answer!" : "Incorrect answer.",
+    correctAnswer: correct ? null : item.answer
+  });
+});
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body || {};
   const user = db.admins.find(x => x.username === String(username || ""));

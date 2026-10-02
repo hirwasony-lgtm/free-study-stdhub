@@ -5,11 +5,117 @@
 <header><div class="wrap nav"><a class="brand" href="/">Free Study <span>Std.Hub</span></a>
 <nav><a href="/">Home</a><a href="#subjects">Subjects</a><a href="#questions">Questions</a><a href="#about">About</a><a class="admin-link" href="/admin.html">Admin</a></nav></div></header>
 <main>
-<section class="hero"><div class="wrap"><p class="eyebrow">LEARN • PRACTICE • GROW</p><h1>Free study materials for students.</h1><p>Find subjects, revision questions and answers in one simple place.</p>
-<div class="search"><input id="search" placeholder="Search a question or answer..."><button onclick="loadQuestions()">Search</button></div></div></section>
-<section id="subjects" class="wrap section"><div class="section-title"><h2>Subjects</h2><span id="subjectCount"></span></div><div id="subjectsGrid" class="grid"></div></section>
-<section id="questions" class="wrap section"><div class="section-title"><h2>Questions & Answers</h2></div><div id="questionsList"></div></section>
+<section class="hero" id="home">
+  <div class="wrap">
+    <p class="eyebrow">LEARN • PRACTICE • GROW</p>
+
+    <h1>Learn. Practice. Grow.</h1>
+
+    <p>
+      Your free study companion for questions, revision
+      and learning materials.
+    </p>
+
+    <div class="search">
+      <input
+        id="search"
+        type="text"
+        placeholder="Search questions..."
+      >
+
+      <button onclick="loadQuestions()">
+        🔎 Search
+      </button>
+    </div>
+  </div>
+</section>
+<section id="subjects" class="wrap section">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">LEARNING</p>
+      <h2>Choose a subject</h2>
+    </div>
+
+    <span id="subjectCount"></span>
+  </div>
+
+  <div id="subjectsGrid" class="grid"></div>
+</section>
+<section id="questions" class="wrap section">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">PRACTICE</p>
+      <h2>Test your knowledge</h2>
+    </div>
+  </div>
+
+  <p class="muted">
+    Answer the questions and check your answer instantly.
+  </p>
+
+  <div id="questionsList"></div>
+</section>
 <section class="wrap ad"><b>ADVERTISEMENT</b><p>Your future advertisement space can be connected here.</p></section>
-<section id="about" class="wrap section"><h2>About Free Study Std.Hub</h2><p>A free learning platform designed to make revision materials easier to find and use.</p></section>
+<section id="about" class="wrap section">
+  <div class="card">
+    <p class="eyebrow">ABOUT US</p>
+
+    <h2>Free Study Std.Hub</h2>
+
+    <p>
+      Free Study Std.Hub is a learning platform designed to help
+      students find study materials, practice questions and improve
+      their knowledge in one simple place.
+    </p>
+
+    <div class="grid">
+      <div>
+        <h3>📚 Learn</h3>
+        <p class="muted">
+          Explore different subjects and learning materials.
+        </p>
+      </div>
+
+      <div>
+        <h3>📝 Practice</h3>
+        <p class="muted">
+          Practice questions and check your answers instantly.
+        </p>
+      </div>
+
+      <div>
+        <h3>🚀 Grow</h3>
+        <p class="muted">
+          Keep practicing and build your knowledge step by step.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 </main><footer><div class="wrap">© <span id="year"></span> Free Study Std.Hub</div></footer>
-<script src="/js/app.js"></script></body></html>
+<script src="/js/app.js"></script>
+
+<div class="mobile-nav">
+  <a href="#home">
+    <span>⌂</span>
+    Home
+  </a>
+
+  <a href="#subjects">
+    <span>📚</span>
+    Subjects
+  </a>
+
+  <a href="#questions">
+    <span>📝</span>
+    Questions
+  </a>
+
+  <a href="#about">
+    <span>ℹ️</span>
+    About
+  </a>
+</div>
+
+</body>
+</html>
