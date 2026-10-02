@@ -4,7 +4,11 @@ const bcrypt = require("bcryptjs");
 const path = require("path");
 
 const fs = require("fs");
+const OpenAI = require("openai");
 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, "data");
@@ -49,7 +53,6 @@ function loadData() {
     fs.readFileSync(DATA_FILE, "utf8")
   );
 }
-
 let db = loadData();
 
 const adminUsername = process.env.ADMIN_USERNAME || "admin";
@@ -65,8 +68,20 @@ if (!db.admins || db.admins.length === 0) {
   ];
 
   save();
+} else {
+  const admin = db.admins.find(
+    x => x.username === adminUsername
+  );
+
+  if (admin && !bcrypt.compareSync(adminPassword, admin.password_hash)) {
+    admin.password_hash = bcrypt.hashSync(adminPassword, 10);
+    save();
+  }
 }
-function save() { fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2)); }
+
+function save() {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+}
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -96,6 +111,45 @@ app.get("/api/questions", (req, res) => {
   }).map(item => ({ ...item, subject_name: db.subjects.find(s => s.id === item.subject_id)?.name || "Unknown" }))
     .sort((a,b) => b.id - a.id);
   res.json(rows);
+});
+app.post("/api/ask-ai", async (req, res) => {
+  try {
+    const question = String(req.body.question || "").trim();
+
+    if (!question) {
+      return res.status(400).json({
+        error: "Please enter a question."
+      });
+    }
+
+    if (!process.env.OPENAI_API_KEY) {
+      return res.status(500).json({
+        error: "AI service is not configured."
+      });
+    }
+
+    const response = await openai.responses.create({
+      model: "gpt-6-luna",
+      instructions:
+        "You are the Free Study Std.Hub educational assistant. " +
+        "Give clear, accurate, student-friendly answers. " +
+        "Explain the answer step by step when useful. " +
+        "If a question has multiple valid answers, explain the valid possibilities. " +
+        "Do not pretend to be certain when the information is uncertain.",
+      input: question
+    });
+
+    res.json({
+      answer: response.output_text
+    });
+
+  } catch (error) {
+    console.error("AI ERROR:", error);
+
+    res.status(500).json({
+      error: "Unable to get an AI answer right now."
+    });
+  }
 });
 app.post("/api/questions/:id/check", (req, res) => {
   const questionId = Number(req.params.id);
