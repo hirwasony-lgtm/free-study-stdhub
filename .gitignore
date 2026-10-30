@@ -2,3 +2,11 @@ node_modules/
 .env
 data/studyhub.json
 *.log
+# Private study materials and local data
+books/
+data/
+
+# Local backups and shortcuts
+*.backup
+*.backup-*
+*.lnk
